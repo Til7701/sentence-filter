@@ -20,6 +20,7 @@ public class PatternGenerator {
     private static String regexWord = "([A-Z]?[a-z]+)";
 
     private static String regexAllTaggedWordEnds = "(\\|([A-Z]+)\\b\\s*)";
+    private static String regexTaggedWord = "(([A-Z]?[a-z]+)" + regexAllTaggedWordEnds + ")";
 
     private static String regexArticle                      = regexWord + "(\\|ART\\b\\s*)";
 
@@ -101,5 +102,9 @@ public class PatternGenerator {
         String regex = "(.*)((\\b" + String.join("\\b)|(\\b", uncommonWords) + "\\b))(.*)";
 
         return Pattern.compile(regex);
+    }
+
+    public static Pattern getNumberedTaggedSentenceLength(int min, int max) {
+        return Pattern.compile(getNumberedTaggedSentence(regexTaggedWord + "{" + min + "," + (max + 1) + "}"));
     }
 }

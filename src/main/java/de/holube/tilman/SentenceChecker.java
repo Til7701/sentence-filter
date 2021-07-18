@@ -29,7 +29,7 @@ public class SentenceChecker {
     private static final int freqencyThreshhold = 1000;
 
     public static void main(String[] args) throws IOException {
-        //wrt();
+        wrt();
         goesa();
     }
 
@@ -37,15 +37,6 @@ public class SentenceChecker {
         // read
         List<String> sentenceList = readFile(readPathGOESA);
         System.out.println(sentenceList.size() + " sentences read from file.");
-
-        // structure check
-        //Pattern sentencePattern = PatternGenerator.getValidNumberedTaggedSentences();
-        //sentenceList = checkStringsForPattern(sentenceList, sentencePattern, true);
-        System.out.println(sentenceList.size() + " sentences remaining after structure check.");
-
-        // clean up
-        //sentenceList = cleanUpSentences(sentenceList);
-        //writeToFile(sentenceList, writePathWRT);
 
         // unknown check
         Set<String> allWords = getAllWords(sentenceList);
@@ -71,6 +62,11 @@ public class SentenceChecker {
         // read
         List<String> sentenceList = readFile(readPathWRT);
         System.out.println(sentenceList.size() + " sentences read from file.");
+
+        // length check
+        Pattern lengthPattern = PatternGenerator.getNumberedTaggedSentenceLength(4, 7);
+        sentenceList = checkStringsForPattern(sentenceList, lengthPattern, true);
+        System.out.println(sentenceList.size() + " sentences remaining after length check.");
 
         // structure check
         Pattern sentencePattern = PatternGenerator.getValidNumberedTaggedSentences();
